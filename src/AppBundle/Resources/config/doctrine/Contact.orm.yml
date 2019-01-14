@@ -1,0 +1,71 @@
+AppBundle\Entity\Contact:
+    type: entity
+    table: contacts # here we store information related to the contact
+    repositoryClass: AppBundle\Repository\ContactRepository
+    indexes:
+            firstName:
+              columns: [ first_name ]
+            lastName:
+              columns: [ last_name ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        firstName:
+            type: string
+            length: '128'
+            column: first_name
+        lastName:
+            type: string
+            length: '128'
+            column: last_name
+        birthDate:
+            type: date
+            column: birth_date
+        street:
+            type: string
+            length: '128'
+        number:
+            type: string
+            length: '20'
+        zip:
+            type: integer
+        city:
+            type: string
+            length: '50'
+        country:
+            type: string
+            length: '50'
+        picture:
+            type: string
+            length: 255
+            nullable: true
+        created_at:
+            type: datetime
+            nullable: true
+            options:
+                default: 0
+                nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updated_at:
+            type: datetime
+            nullable: true
+            options:
+                 default: 0
+                 nullable: true
+            gedmo:
+                 timestampable:
+                     on: update
+    lifecycleCallbacks: {  }
+    oneToMany:
+          phones:
+              targetEntity: Phone
+              mappedBy: contact
+          emails:
+              targetEntity: Email
+              mappedBy: contact

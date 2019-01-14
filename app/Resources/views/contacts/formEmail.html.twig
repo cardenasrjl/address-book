@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="grid-x grid-padding-x">
+        <div class="large-12 medium-12 cell">
+            <h5>Add Email Account for contact: {{ contact.firstName }} {{ contact.lastName }}</h5>
+
+            {% if error_message is defined %}
+                <div class="large-12 columns">
+                    <div class="callout alert">
+                        {{ error_message | capitalize }}
+                    </div>
+                </div>
+            {% endif %}
+
+            {% if success_message is defined %}
+                <div class="large-12 columns">
+                    <div class="callout success" id="messageSuccess">
+                        {{ success_message | capitalize }}
+                    </div>
+                </div>
+            {% endif %}
+
+            <form action="{{ path('new_email', { 'contactId': contact.id }) }}"
+                  method="post">
+                <div class="grid-x grid-padding-x">
+                    <div class="large-4 cell">
+                        <label>Type</label>
+                        <select name="form[type]">
+                            {% for type in emailTypes %}
+                                <option value="{{ type }}">{{ type | capitalize }}.</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="large-4 cell">
+                        <label>Email</label>
+                        <input placeholder="Email account: example@email.com" name="form[email]"
+                               value="{{ email.email is defined ? email.email: '' }}"
+                               type="email"
+                               required
+                        />
+                    </div>
+
+                </div>
+                <div class="medium-6  columns">
+                    <input type="submit" value="Add" class="button success"/>
+                    <a class="button" href="{{ path('modify_contact', { 'contactId': contact.id }) }}">Contact Data</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}

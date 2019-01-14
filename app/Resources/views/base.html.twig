@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>{% block title %}Address Book Demo{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('css/foundation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+</head>
+<body>
+
+<div class="grid-container">
+    <div class="grid-x grid-padding-x">
+        <div class="large-12 cell">
+            <h1>Address Book</h1>
+        </div>
+    </div>
+
+
+    <!-- Start Top Bar -->
+    <div class="top-bar">
+        <div class="row">
+            <div class="top-bar-left">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    <li><a href="{{ path('index_contacts') }}">Contacts List</a></li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Bar -->
+
+    <br>
+
+    {% block body %}{% endblock %}
+
+
+
+
+</div>
+
+<script>
+    $(document).foundation();
+</script>
+
+{% block javascripts %}{% endblock %}
+<script src="{{ asset('js/vendor/jquery.js') }}"></script>
+<script src="{{ asset('js/vendor/what-input.js') }}"></script>
+<script src="{{ asset('js/vendor/foundation.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
+
+
+</body>
+</html>

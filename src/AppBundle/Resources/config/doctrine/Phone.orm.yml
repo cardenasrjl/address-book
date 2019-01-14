@@ -1,0 +1,56 @@
+AppBundle\Entity\Phone:
+    type: entity
+    table: phones # here we store all phones for the contacts
+    repositoryClass: AppBundle\Repository\PhoneRepository
+    indexes:
+        phoneIndex:
+          columns: [ country_code, phone ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contactId:
+            type: integer
+            column: contact_id
+        countryCode:
+            type: integer
+            column: country_code
+        phone:
+            type: string
+            length: '50'
+        type:
+            type: string
+            length: '20'
+        created_at:
+            type: datetime
+            nullable: true
+            options:
+                default: 0
+                nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updated_at:
+            type: datetime
+            nullable: true
+            options:
+                 default: 0
+                 nullable: true
+            gedmo:
+                 timestampable:
+                     on: update
+    uniqueConstraints:
+        phone_idx:
+          columns: [ country_code, phone ]
+
+    lifecycleCallbacks: {  }
+    manyToOne:
+        contact:
+            targetEntity: Contact
+            inversedBy: phones
+            joinColumn:
+                name: contact_id
+                referencedColumnName: id

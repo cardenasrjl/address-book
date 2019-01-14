@@ -1,0 +1,50 @@
+AppBundle\Entity\Email:
+    type: entity
+    table: emails  # here we store all email accounts for the contacts
+    repositoryClass: AppBundle\Repository\EmailRepository
+    indexes:
+            emailIndex:
+              columns: [ email ]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contactId:
+            type: integer
+            column: contact_id
+        type:
+            type: string
+            length: '20'
+        email:
+            type: string
+            length: '128'
+            unique: true
+        created_at:
+            type: datetime
+            nullable: true
+            options:
+                default: 0
+                nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updated_at:
+            type: datetime
+            nullable: true
+            options:
+                 default: 0
+                 nullable: true
+            gedmo:
+                 timestampable:
+                     on: update
+    lifecycleCallbacks: {  }
+    manyToOne:
+        contact:
+            targetEntity: Contact
+            inversedBy: emails
+            joinColumn:
+                name: contact_id
+                referencedColumnName: id

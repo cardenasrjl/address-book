@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="grid-x grid-padding-x">
+		<div class="large-12 medium-12 cell">
+			<h5>{{ operation == 'new' ? 'New Contact' : 'Modify Contact' }}</h5>
+
+			{% if error_message is defined %}
+				<div class="large-12 columns">
+					<div class="callout alert">
+						{{ error_message | capitalize }}
+					</div>
+				</div>
+			{% endif %}
+
+			{% if success_message is defined %}
+				<div class="large-12 columns">
+					<div class="callout success">
+						{{ success_message | capitalize }}
+					</div>
+				</div>
+			{% endif %}
+
+			<form action="{{ operation == 'new' ? path('new_contact') : path('modify_contact', { 'contactId': contact.id }) }}"
+				  method="post"
+				  enctype="multipart/form-data"
+			>
+
+				<div class="grid-x grid-padding-x">
+					<div class="large-6 cell">
+						<label>Picture</label>
+						{% if contact.picture is defined %}
+							<img width="200px" src="{{ asset(pictures_path~contact.picture) }}"/>
+						{% endif %}
+						<input type="file" name="form[picture]">
+					</div>
+				</div>
+
+				<div class="grid-x grid-padding-x">
+				<div class="large-6 cell">
+					<label>First Name</label>
+					<input placeholder="First Name" name="form[firstName]"
+						   value="{{ contact.firstName is defined ? contact.firstName : '' }}"
+						   type="text"
+						   required
+					/>
+				</div>
+
+				<div class="large-6 cell">
+					<label>Last Name</label>
+					<input placeholder="Last Name" name="form[lastName]"
+						   value="{{ contact.lastName is defined ? contact.lastName : '' }}"
+						   type="text"
+						   required
+					/>
+				</div>
+		</div>
+		<div class="grid-x grid-padding-x">
+			<div class="large-4 cell">
+				<label>Birth Date</label>
+				<input name="form[birthDate]"
+					   value="{{ contact.birthDate is defined ? contact.birthDate | date("Y-m-d")  : '' }}"
+					   type="date"
+					   required
+				/>
+			</div>
+		</div>
+		<div class="grid-x grid-padding-x">
+			<div class="large-4 cell">
+				<label>Street</label>
+				<input name="form[street]"
+					   value="{{ contact.street is defined ? contact.street : '' }}"
+					   type="text"
+					   required
+				/>
+			</div>
+
+			<div class="large-4 cell">
+				<label>Number</label>
+				<input name="form[number]"
+					   value="{{ contact.number is defined ? contact.number : '' }}"
+					   required
+					   type="text"/>
+			</div>
+
+			<div class="large-4 cell">
+				<label>Zip Code</label>
+				<input name="form[zip]"
+					   value="{{ contact.zip is defined ? contact.zip : '' }}"
+					   type="number"
+					   required
+				/>
+			</div>
+		</div>
+		<div class="grid-x grid-padding-x">
+			<div class="large-4 cell">
+				<label>City</label>
+				<input name="form[city]"
+					   value="{{ contact.city is defined ? contact.city : '' }}"
+					   type="text"
+					   required
+				/>
+			</div>
+			<div class="large-4 cell">
+				<label>Country</label>
+				<input name="form[country]"
+					   value="{{ contact.country is defined ? contact.country : '' }}"
+					   type="text"
+					   required
+
+				/>
+			</div>
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 cell">
+				<h5>Phone Numbers
+					{% if contact.getPhones is defined %}
+						<small><a class="small-9 success"
+								  href="{{ path('new_phone', { 'contactId': contact.id }) }}">Add Phone</a></small>
+					{% else %}
+						<small>Create the contact first, and then you can add phone numbers.</small>
+					{% endif %}
+				</h5>
+
+				{% if contact.getPhones is defined %}
+					{% for phone in contact.getPhones() %}
+						<p>
+							<small>(+{{ phone.countryCode }}) {{ phone.phone }} <i>({{ phone.type | capitalize }})</i>
+							</small>
+							<a class="" href="{{ path('remove_phone', { 'phoneId': phone.id }) }}"
+							   title="Remove">[x]</a>
+						</p>
+					{% endfor %}
+				{% endif %}
+
+			</div>
+
+		</div>
+
+		<div class="grid-x grid-padding-x">
+			<div class="large-12 cell">
+				<h5>Email Accounts
+					{% if contact.getEmails is defined %}
+						<small><a class="small-9 success"
+								  href="{{ path('new_email', { 'contactId': contact.id }) }}">Add Email</a></small>
+					{% else %}
+						<small>Create the contact first, and then you can add email accounts.</small>
+					{% endif %}
+				</h5>
+
+				{% if contact.getEmails is defined %}
+					{% for email in contact.getEmails() %}
+						<p>
+							<small> {{ email.email }} <i>({{ email.type |capitalize }})</i></small>
+							<a href="{{ path('remove_email', { 'emailId': email.id }) }}">[x]</a>
+						</p>
+					{% endfor %}
+				{% endif %}
+
+			</div>
+
+		</div>
+
+
+		<div class="medium-6  columns">
+			<input type="submit" value="Save" class="button success"/>
+			<a class="button" href="{{ path('index_contacts') }}">All Contacts</a>
+		</div>
+
+		</form>
+	</div>
+
+	</div>
+
+
+
+{% endblock %}
