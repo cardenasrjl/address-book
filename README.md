@@ -24,7 +24,7 @@ Force to update the schema.
 php bin/console doctrine:schema:update --force
 ```
 
-Make sure that following parameters are well set in parameteres.yml
+Make sure that the following parameters are well set in parameteres.yml
 ```
 database_path: '%kernel.project_dir%/var/data/data.sqlite'
 pictures_path: '%kernel.project_dir%/web/uploads/'
