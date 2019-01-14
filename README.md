@@ -31,4 +31,17 @@ pictures_path: '%kernel.project_dir%/web/uploads/'
 pictures_web_path: '/uploads/'
 ```
 
+Database structure
+---------------------
+
+3 tables have been created: contacts, phones and emails. 
+
+Structure is described in:
+
+```
+/src/AppBundle/Resources/config/doctrine/Contact.orm.yml
+/src/AppBundle/Resources/config/doctrine/Phone.orm.yml
+/src/AppBundle/Resources/config/doctrine/Email.orm.yml
+```
+
 Thats it !!
